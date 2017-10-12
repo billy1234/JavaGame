@@ -66,7 +66,7 @@ public class Main extends JFrame implements Runnable{
         while (true) {
 
             waitForNextFrame();
-            renderEngine.update();
+            renderEngine.update(); //TODO move this to the correct area
 
         }
 
