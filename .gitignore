@@ -1,8 +1,8 @@
 #inteli files/folders
-*/out
-*/idea/tasks.xml
-*/idea/workspace.xml
+/out/
+.idea/tasks.xml
+.idea/workspace.xml
 
 #extentions
-*.iws
-*.class
+.iws
+.class
