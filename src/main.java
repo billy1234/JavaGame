@@ -1,3 +1,5 @@
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
@@ -15,7 +17,7 @@ public class Main extends JFrame implements Runnable{
 
         @Override
         public void paint(Graphics g) {
-
+            renderEngine.draw(g);
         }
 
         @Override
@@ -30,9 +32,15 @@ public class Main extends JFrame implements Runnable{
     }
 
     RenderEngine renderEngine;
+    LogicEngine logicEngine;
+
+    EngineHeap[] engines;
+
+
+
 
     Instant lastFrame = Instant.now();
-    Instant nextFrame;
+    Instant nextFrame = Instant.now();
 
     final long fps = 60;
 
@@ -50,28 +58,30 @@ public class Main extends JFrame implements Runnable{
         this.addKeyListener(canvas);
         this.pack();
         this.setVisible(true);
+        this.setBackground(Color.black);
         init();
 
     }
 
     private void init() {
-        renderEngine = new RenderEngine(() -> repaint());
-
+        renderEngine = new RenderEngine();
+        logicEngine = new LogicEngine();
+        engines = new EngineHeap[]{renderEngine,logicEngine};
     }
 
     @Override
     public void run() {
 
+        Grid grid = new Grid( engines,20,30,1);
+
 
         while (true) {
 
             waitForNextFrame();
-            renderEngine.update(); //TODO move this to the correct area
+            logicEngine.Update();
+            this.repaint();
 
         }
-
-
-
     }
 
     void waitForNextFrame()
@@ -84,7 +94,7 @@ public class Main extends JFrame implements Runnable{
 
         }
         lastFrame = Instant.now();
-        nextFrame = lastFrame.plusSeconds(60/fps); //add the fraction of a second that the fps represents
+        nextFrame = lastFrame.plusMillis( (long)(( (float)1000) / (float)fps)); //add the fraction of a millisecond that a frame takes
 
     }
 

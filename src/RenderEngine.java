@@ -1,21 +1,16 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.concurrent.*;
-import java.lang.Object;
 
-public class RenderEngine {
+public class RenderEngine extends EngineHeap<Drawable> {
 
-    Runnable repaint;
-    ArrayList<Drawable> renderables;
-    public RenderEngine(Runnable repaint)
+
+    public RenderEngine()
     {
-        this.repaint = repaint;
+        super(Drawable.class);
     }
 
-    public void update(Graphics g)
+    public void draw(Graphics g)
     {
-        renderables.forEach((e) -> e.draw(g));
-        repaint.run();
+        heap.forEach((e) -> e.draw(g));
     }
 
 }
