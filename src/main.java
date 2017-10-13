@@ -76,6 +76,10 @@ public class Main extends JFrame implements Runnable{
         GridActor player = new GridActor(engines,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
 
 
+        renderEngine.sortRenderOrder();
+        System.out.println(renderEngine.heap.get(0));
+
+
         while (true) {
 
             waitForNextFrame();

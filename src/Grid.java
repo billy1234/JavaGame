@@ -21,7 +21,7 @@ public class Grid {
             for(int j =0; j < gridSize; j ++) {
 
                 position = getPixelAt(i,j);
-                tiles[i][j] = new Tile(engines,position.x,position.y,tileSize,ImageLoader.ImageList.values()[rng.nextInt(ImageLoader.ImageList.values().length - 1)]);
+                tiles[i][j] = new Tile(engines,position.x,position.y,tileSize,ImageLoader.ImageList.values()[rng.nextInt(4)]);
             }
         }
     }

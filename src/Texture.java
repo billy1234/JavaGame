@@ -6,7 +6,6 @@ public class Texture {
     Image image;
     int xSize, ySize;
 
-    final Color bg = Color.white;
 
     public Texture( int size,Image image)
     {
@@ -16,7 +15,7 @@ public class Texture {
     }
 
     public void draw(Graphics g,int x,int y) {
-        g.drawImage(image,x,y,xSize,ySize,bg,null);
+        g.drawImage(image,x,y,xSize,ySize,null);
     }
 
 }

@@ -16,8 +16,7 @@ public class Tile extends GameObject implements Drawable,Runnable {
         this.size = size;
         this.borderColor = Color.black;
         this.texture = new Texture(size, ImageLoader.getInstance().getImage(textureType));
-        if(texture == null)
-        {
+        if(texture == null) {
             System.out.println("null texture object");
         }
     }
@@ -36,5 +35,10 @@ public class Tile extends GameObject implements Drawable,Runnable {
     @Override
     public void run() {
         //do nothing
+    }
+
+    @Override
+    public int order() {
+        return 0;
     }
 }

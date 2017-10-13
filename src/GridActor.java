@@ -20,7 +20,15 @@ public class GridActor extends GameObject implements Drawable,Runnable {
     }
 
     @Override
+    public int order() {
+        return 1;
+    }
+
+    @Override
     public void run() {
         //some game logic
     }
+
+
+
 }
