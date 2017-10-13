@@ -15,7 +15,7 @@ public class Tile extends GameObject implements Drawable,Runnable {
         this.y = y;
         this.size = size;
         this.borderColor = Color.black;
-        this.texture = new Texture(x,y,size, ImageLoader.getInstance().getImage(textureType));
+        this.texture = new Texture(size, ImageLoader.getInstance().getImage(textureType));
         if(texture == null)
         {
             System.out.println("null texture object");
@@ -26,7 +26,7 @@ public class Tile extends GameObject implements Drawable,Runnable {
     public void draw(Graphics g) {
 
         if(texture != null) {
-            texture.draw(g);
+            texture.draw(g,x,y);
         }
         
         g.setColor(borderColor);

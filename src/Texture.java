@@ -1,24 +1,21 @@
 import java.awt.*;
 
-public class Texture implements Drawable {
+public class Texture {
 
 
     Image image;
-    int x,y, xSize, ySize;
+    int xSize, ySize;
 
     final Color bg = Color.white;
 
-    public Texture( int x, int y, int size,Image image)
+    public Texture( int size,Image image)
     {
         this.image = image;
-        this.x = x;
-        this.y = y;
         this.xSize = size;
         this.ySize = size;
     }
 
-    @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g,int x,int y) {
         g.drawImage(image,x,y,xSize,ySize,bg,null);
     }
 

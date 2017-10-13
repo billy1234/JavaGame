@@ -73,6 +73,7 @@ public class Main extends JFrame implements Runnable{
     public void run() {
 
         Grid grid = new Grid( engines,20,30,1);
+        GridActor player = new GridActor(engines,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
 
 
         while (true) {

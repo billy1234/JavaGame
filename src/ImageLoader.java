@@ -13,7 +13,8 @@ public class ImageLoader {
         DIRT("dirt.png"),
         GRASS("grass.png"),
         ROCK("rock.png"),
-        SAND("sand.png");
+        SAND("sand.png"),
+        COIN("coin.png");
 
         private final String path;
 
