@@ -1,9 +1,13 @@
 import java.awt.*;
 import java.util.Random;
 
+
 public class Tile extends GameObject implements Drawable,Runnable {
 
     public int x = 0,y = 0, size =5;
+    ImageLoader.ImageList image;
+    Texture myTexture;
+    // TODO finish this
     Color color = Color.blue;
 
     public Tile (EngineHeap[] engineHeaps, int x, int y, int size) {
