@@ -8,14 +8,12 @@ import java.util.Map;
 
 public class ImageLoader {
 
-    private static Map<String,Image> cache = new HashMap<>();
-
     public enum ImageList
     {
         DIRT("dirt.png"),
         GRASS("grass.png"),
         ROCK("rock.png"),
-        STONE("stone.png");
+        SAND("sand.png");
 
         private final String path;
 
@@ -25,15 +23,30 @@ public class ImageLoader {
         }
     }
 
-
     private ImageLoader(){}
 
-    public static Image getImage(ImageList image)
+    private static ImageLoader instance;
+
+    public static ImageLoader getInstance()
+    {
+
+        if(instance == null)
+        {
+            instance = new ImageLoader();
+        }
+
+        return instance;
+    }
+
+    private Map<String,Image> cache = new HashMap<>();
+
+
+    public Image getImage(ImageList image)
     {
         return loadFromPath(image.path);
     }
 
-    private static Image loadFromPath(String path)
+    private Image loadFromPath(String path)
     {
 
         Image image = cache.get(path);

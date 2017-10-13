@@ -1,13 +1,14 @@
 import java.awt.*;
 
 public class Texture implements Drawable {
-    //TODO look up ImageObserver
+
 
     Image image;
     int x,y, xSize, ySize;
 
     final Color bg = Color.white;
-    public Texture(Image image, int x, int y, int size)
+
+    public Texture( int x, int y, int size,Image image)
     {
         this.image = image;
         this.x = x;
@@ -20,4 +21,5 @@ public class Texture implements Drawable {
     public void draw(Graphics g) {
         g.drawImage(image,x,y,xSize,ySize,bg,null);
     }
+
 }

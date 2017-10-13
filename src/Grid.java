@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Grid {
     public Tile tiles [][];
     public int gridSize,tileSize,tileSpacing;
@@ -14,12 +16,12 @@ public class Grid {
     {
         tiles = new Tile[gridSize][gridSize];
         GridVector position;
-
+        Random rng = new Random();
         for(int i =0; i < gridSize; i ++) {
             for(int j =0; j < gridSize; j ++) {
 
                 position = getPixelAt(i,j);
-                tiles[i][j] = new Tile(engines,position.x,position.y,tileSize);
+                tiles[i][j] = new Tile(engines,position.x,position.y,tileSize,ImageLoader.ImageList.values()[rng.nextInt(ImageLoader.ImageList.values().length)]);
             }
         }
     }
