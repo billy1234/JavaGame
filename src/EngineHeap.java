@@ -1,5 +1,6 @@
 
 
+import java.lang.annotation.ElementType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -17,13 +18,14 @@ public abstract class EngineHeap<T> {
         this.elementType = elementType;
     }
 
-    public void addObject(T e)
+    public void addObject(T e) //more than likely redundant
     {
         heap.add(e);
     }
 
     public void registerNewGameObject(GameObject g)
     {
+
         if(elementType.isInstance(g)) {
             heap.add((T)g);
         }

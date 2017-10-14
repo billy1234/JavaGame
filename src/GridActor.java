@@ -5,9 +5,9 @@ public class GridActor extends GameObject implements Drawable,Runnable {
     public Tile tile;
     public Texture texture;
 
-    public GridActor(EngineHeap[] engineHeaps,Tile tile, ImageLoader.ImageList texture)
+    public GridActor(Engine engine,Tile tile, ImageLoader.ImageList texture)
     {
-        super(engineHeaps);
+        super(engine);
         this.tile = tile;
         this.texture = new Texture(tile.size,ImageLoader.getInstance().getImage(texture));
     }

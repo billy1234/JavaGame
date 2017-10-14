@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,9 +18,11 @@ public class RenderEngine extends EngineHeap<Drawable> {
         heap.forEach((e) -> e.draw(g));
     }
 
-    public void sortRenderOrder()
+    public void sortRenderOrder(JFrame frame)
     {
+        frame.setIgnoreRepaint(true);
         Collections.sort(heap);
+        frame.setIgnoreRepaint(false);
     }
 
 }

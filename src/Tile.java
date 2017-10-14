@@ -9,8 +9,8 @@ public class Tile extends GameObject implements Drawable,Runnable {
     Texture texture;
     Color borderColor = Color.black;
 
-    public Tile (EngineHeap[] engineHeaps, int x, int y, int size, ImageLoader.ImageList textureType) {
-        super(engineHeaps);
+    public Tile (Engine engine, int x, int y, int size, ImageLoader.ImageList textureType) {
+        super(engine);
         this.x = x;
         this.y = y;
         this.size = size;

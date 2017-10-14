@@ -4,15 +4,15 @@ public class Grid {
     public Tile tiles [][];
     public int gridSize,tileSize,tileSpacing;
 
-    public Grid(EngineHeap[] engines, int gridSize, int tileSize, int tileSpacing)
+    public Grid(Engine engine, int gridSize, int tileSize, int tileSpacing)
     {
         this.gridSize = gridSize;
         this.tileSize = tileSize;
         this.tileSpacing = tileSpacing;
-        initTiles(engines);
+        initTiles(engine);
     }
 
-    private void initTiles(EngineHeap[] engines)
+    private void initTiles(Engine engine)
     {
         tiles = new Tile[gridSize][gridSize];
         GridVector position;
@@ -21,14 +21,14 @@ public class Grid {
             for(int j =0; j < gridSize; j ++) {
 
                 position = getPixelAt(i,j);
-                tiles[i][j] = new Tile(engines,position.x,position.y,tileSize,ImageLoader.ImageList.values()[rng.nextInt(4)]);
+                tiles[i][j] = new Tile(engine,position.x,position.y,tileSize,ImageLoader.ImageList.values()[rng.nextInt(4)]);
             }
         }
     }
 
     public GridVector getPixelAt(int x, int y)
     {
-        return new GridVector(x,y).multiply(tileSize + tileSpacing).add(tileSpacing);
+        return new GridVector(x,y).add(tileSpacing).multiply(tileSize + tileSpacing).add(tileSpacing);
     }
 
     public Tile getTileAt(GridVector i)

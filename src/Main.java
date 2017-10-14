@@ -17,7 +17,9 @@ public class Main extends JFrame implements Runnable{
 
         @Override
         public void paint(Graphics g) {
-            renderEngine.draw(g);
+            if(running) {
+                engine.renderEngine.draw(g);
+            }
         }
 
         @Override
@@ -31,25 +33,22 @@ public class Main extends JFrame implements Runnable{
 
     }
 
-    RenderEngine renderEngine;
-    LogicEngine logicEngine;
-
-    EngineHeap[] engines;
-
-
-
+    Engine engine;
 
     Instant lastFrame = Instant.now();
     Instant nextFrame = Instant.now();
 
-    final long fps = 60;
+    boolean running = false;
 
+    Grid grid;
+    GridActor player;
+
+    final long fps = 60;
 
     public static void main(String[] args) {
         Main window = new Main();
         window.run();
     }
-
 
     private Main() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,29 +63,32 @@ public class Main extends JFrame implements Runnable{
     }
 
     private void init() {
-        renderEngine = new RenderEngine();
-        logicEngine = new LogicEngine();
-        engines = new EngineHeap[]{renderEngine,logicEngine};
+        engine = new Engine();
     }
 
     @Override
     public void run() {
 
-        Grid grid = new Grid( engines,20,30,1);
-        GridActor player = new GridActor(engines,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
+        start();
 
-
-        renderEngine.sortRenderOrder();
-        System.out.println(renderEngine.heap.get(0));
-
-
-        while (true) {
+        while (running) {
 
             waitForNextFrame();
-            logicEngine.Update();
-            this.repaint();
+            engine.logicEngine.Update();
+            this.repaint();//in turn calls render engine update
 
         }
+    }
+
+    public void start()
+    {
+        setIgnoreRepaint(true); //dont draw untill setup is finished
+        grid = new Grid( engine,20,30,1);
+        player = new GridActor(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
+        engine.renderEngine.sortRenderOrder(this);
+        setIgnoreRepaint(false);
+
+        running = true;
     }
 
     void waitForNextFrame()
