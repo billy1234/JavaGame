@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class GridActor extends GameObject implements Drawable,Runnable {
+public class GridActor extends GameObject implements Drawable {
 
     public Tile tile;
     public Texture texture;
@@ -15,7 +15,7 @@ public class GridActor extends GameObject implements Drawable,Runnable {
     @Override
     public void draw(Graphics g) {
         if(texture != null) {
-            texture.draw(g,tile.x,tile.y);
+            texture.draw(g,tile.screenX,tile.screenY);
         }
     }
 
@@ -24,11 +24,14 @@ public class GridActor extends GameObject implements Drawable,Runnable {
         return 1;
     }
 
-    @Override
-    public void run() {
-        //some game logic
+    protected void move(GridVector v){
+
+        if(v.isZero()){
+            return;
+        }
+
+        GridVector pos = tile.getGridPos().add(v).constrain(0,0,tile.grid.gridSize,tile.grid.gridSize);
+        tile = tile.grid.getTileAt(pos);
     }
-
-
 
 }

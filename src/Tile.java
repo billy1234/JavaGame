@@ -1,19 +1,22 @@
 import java.awt.*;
-import java.util.Random;
 
 
-public class Tile extends GameObject implements Drawable,Runnable {
+public class Tile extends GameObject implements Drawable {
 
-    public int x = 0,y = 0, size =5;
+    public int screenX = 0, screenY = 0, size =5,gridX = 0,gridY = 0;
 
     Texture texture;
     Color borderColor = Color.black;
+    public Grid grid;
 
-    public Tile (Engine engine, int x, int y, int size, ImageLoader.ImageList textureType) {
+    public Tile (Engine engine, int gridX, int gridY,int screenX, int screenY, int size, Grid grid, ImageLoader.ImageList textureType) {
         super(engine);
-        this.x = x;
-        this.y = y;
+        this.screenX = screenX;
+        this.screenY = screenY;
+        this.gridX = gridX;
+        this.gridY = gridY;
         this.size = size;
+        this.grid = grid;
         this.borderColor = Color.black;
         this.texture = new Texture(size, ImageLoader.getInstance().getImage(textureType));
         if(texture == null) {
@@ -21,20 +24,20 @@ public class Tile extends GameObject implements Drawable,Runnable {
         }
     }
 
+    public GridVector getGridPos()
+    {
+        return new GridVector(gridX, gridY);
+    }
+
     @Override
     public void draw(Graphics g) {
 
         if(texture != null) {
-            texture.draw(g,x,y);
+            texture.draw(g, screenX, screenY);
         }
         
         g.setColor(borderColor);
-        g.drawRoundRect(x,y,size,size,5,5);
-    }
-
-    @Override
-    public void run() {
-        //do nothing
+        g.drawRoundRect(screenX, screenY,size,size,5,5);
     }
 
     @Override

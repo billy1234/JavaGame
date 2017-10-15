@@ -8,7 +8,7 @@ import java.time.*;
 
 public class Main extends JFrame implements Runnable{
 
-    private class Canvas extends  JPanel implements KeyListener {
+    private class Canvas extends  JPanel {
 
         public Canvas() {
             setPreferredSize(new Dimension(1280, 720));
@@ -22,15 +22,6 @@ public class Main extends JFrame implements Runnable{
             }
         }
 
-        @Override
-        public void keyTyped(KeyEvent e) {}
-
-        @Override
-        public void keyPressed(KeyEvent e) {}
-
-        @Override
-        public void keyReleased(KeyEvent e) {}
-
     }
 
     Engine engine;
@@ -41,7 +32,7 @@ public class Main extends JFrame implements Runnable{
     boolean running = false;
 
     Grid grid;
-    GridActor player;
+    Player player;
 
     final long fps = 60;
 
@@ -54,22 +45,21 @@ public class Main extends JFrame implements Runnable{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Canvas canvas = new Canvas();
         this.setContentPane(canvas);
-        this.addKeyListener(canvas);
         this.pack();
         this.setVisible(true);
         this.setBackground(Color.black);
         init();
-
     }
 
     private void init() {
-        engine = new Engine();
+        engine = new Engine(this);
     }
 
     @Override
     public void run() {
-
+        setIgnoreRepaint(true); //dont draw untill setup is finished
         start();
+        setIgnoreRepaint(false);
 
         while (running) {
 
@@ -82,11 +72,11 @@ public class Main extends JFrame implements Runnable{
 
     public void start()
     {
-        setIgnoreRepaint(true); //dont draw untill setup is finished
+
         grid = new Grid( engine,20,30,1);
-        player = new GridActor(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
+        player = new Player(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
         engine.renderEngine.sortRenderOrder(this);
-        setIgnoreRepaint(false);
+
 
         running = true;
     }
