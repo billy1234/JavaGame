@@ -14,7 +14,8 @@ public class ImageLoader {
         GRASS("grass.png"),
         ROCK("rock.png"),
         SAND("sand.png"),
-        COIN("coin.png");
+        COIN("coin.png"),
+        TREE("tree.png");
 
         private final String path;
 
@@ -39,7 +40,7 @@ public class ImageLoader {
         return instance;
     }
 
-    private Map<String,Image> cache = new HashMap<>();
+    private Map<String,Image> imageCache = new HashMap<>();
 
 
     public Image getImage(ImageList image)
@@ -47,10 +48,11 @@ public class ImageLoader {
         return loadFromPath(image.path);
     }
 
+
     private Image loadFromPath(String path)
     {
 
-        Image image = cache.get(path);
+        Image image = imageCache.get(path);
 
         if(image != null){
             return image;
@@ -58,7 +60,7 @@ public class ImageLoader {
 
         try {
             image = ImageIO.read(new File(path));
-            cache.put(path,image);
+            imageCache.put(path,image);
         }
         catch (java.io.IOException e)
         {

@@ -30,6 +30,7 @@ public class Main extends JFrame implements Runnable{
     Instant nextFrame = Instant.now();
 
     boolean running = false;
+    boolean isPlayerTurn = true;
 
     Grid grid;
     Player player;
@@ -63,8 +64,16 @@ public class Main extends JFrame implements Runnable{
 
         while (running) {
 
+
             waitForNextFrame();
-            engine.logicEngine.Update();
+            if(!isPlayerTurn) {
+                engine.logicEngine.Update();
+                isPlayerTurn = true;
+            }
+            else
+            {
+                player.takeTurn();
+            }
             this.repaint();//in turn calls render engine update
 
         }
@@ -74,13 +83,17 @@ public class Main extends JFrame implements Runnable{
     {
 
         grid = new Grid( engine,20,30,1);
-        player = new Player(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN);
+        player = new Player(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN, () -> onPlayerTurn());
         engine.renderEngine.sortRenderOrder(this);
 
 
         running = true;
     }
 
+    void onPlayerTurn()
+    {
+        isPlayerTurn = false;
+    }
     void waitForNextFrame()
     {
         if(lastFrame.isBefore(nextFrame)) { //if the time to update isn't now

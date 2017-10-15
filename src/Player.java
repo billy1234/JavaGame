@@ -1,15 +1,19 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Player extends GridActor implements KeyListener,Runnable {
+public class Player extends GridActor implements KeyListener {
 
     GridVector velocity;
     char up = 'w',down = 's',left = 'a',right = 'd';
 
-    public Player(Engine engine,Tile tile, ImageLoader.ImageList texture)
+    public Runnable moveCallback;
+
+
+    public Player(Engine engine,Tile tile, ImageLoader.ImageList texture,Runnable moveCallback)
     {
         super(engine,tile, texture);
         this.velocity = new GridVector(0,0);
+        this.moveCallback = moveCallback;
     }
 
     @Override
@@ -27,22 +31,29 @@ public class Player extends GridActor implements KeyListener,Runnable {
 
         if(e.getKeyChar() == up) {
             velocity.y = -1;
+            velocity.x = 0;
         }
         else if(e.getKeyChar() == down) {
             velocity.y = 1;
+            velocity.x = 0;
         }
-
-        if(e.getKeyChar() == left) {
+        else if(e.getKeyChar() == left) {
             velocity.x = -1;
+            velocity.y = 0;
         }
-        else if(e.getKeyChar() == right){
+        else if(e.getKeyChar() == right) {
             velocity.x = 1;
+            velocity.y = 0;
         }
     }
 
-    @Override
-    public void run() {
-        move(velocity);
-        velocity.zero();
+
+    public void takeTurn() {
+        if(tryMove(velocity))
+        {
+            velocity.zero();
+            moveCallback.run();
+        }
+
     }
 }

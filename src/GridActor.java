@@ -2,14 +2,17 @@ import java.awt.*;
 
 public class GridActor extends GameObject implements Drawable {
 
-    public Tile tile;
+    protected Tile tile;
+
     public Texture texture;
+
 
     public GridActor(Engine engine,Tile tile, ImageLoader.ImageList texture)
     {
         super(engine);
         this.tile = tile;
         this.texture = new Texture(tile.size,ImageLoader.getInstance().getImage(texture));
+        changeTile(tile);
     }
 
     @Override
@@ -25,13 +28,39 @@ public class GridActor extends GameObject implements Drawable {
     }
 
     protected void move(GridVector v){
+        tryMove(v);
+    }
+
+    protected boolean tryMove(GridVector v){
 
         if(v.isZero()){
-            return;
+            return false;
         }
 
         GridVector pos = tile.getGridPos().add(v).constrain(0,0,tile.grid.gridSize,tile.grid.gridSize);
-        tile = tile.grid.getTileAt(pos);
+        return tryChangeTile(tile.grid.getTileAt(pos));
+    }
+
+    public boolean tryChangeTile(Tile nextTile)
+    {
+        if(nextTile.occupant == null) {
+            changeTile(nextTile);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    protected void changeTile(Tile nextTile) //dosnt check next tiles ocupacy status
+    {
+        if(nextTile.occupant == null) {
+            tile.occupant = null;
+            nextTile.occupant = this;
+            this.tile = nextTile;
+        }
+
+
     }
 
 }

@@ -22,6 +22,10 @@ public class Grid {
 
                 position = getPixelAt(i,j);
                 tiles[i][j] = new Tile(engine,i,j,position.x,position.y,tileSize,this,ImageLoader.ImageList.values()[rng.nextInt(4)]);
+
+                if(rng.nextInt(10) == 0){ //1 in 10 chance
+                    PrefabFactory.getInstance(engine).createTree(tiles[i][j]);
+                }
             }
         }
     }

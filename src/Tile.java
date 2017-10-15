@@ -7,7 +7,9 @@ public class Tile extends GameObject implements Drawable {
 
     Texture texture;
     Color borderColor = Color.black;
+
     public Grid grid;
+    public GridActor occupant;
 
     public Tile (Engine engine, int gridX, int gridY,int screenX, int screenY, int size, Grid grid, ImageLoader.ImageList textureType) {
         super(engine);
