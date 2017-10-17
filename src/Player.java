@@ -6,14 +6,11 @@ public class Player extends GridActor implements KeyListener {
     GridVector velocity;
     char up = 'w',down = 's',left = 'a',right = 'd';
 
-    public Runnable moveCallback;
 
-
-    public Player(Engine engine,Tile tile, ImageLoader.ImageList texture,Runnable moveCallback)
+    public Player(Engine engine,Tile tile, ImageLoader.ImageList texture)
     {
         super(engine,tile, texture);
         this.velocity = new GridVector(0,0);
-        this.moveCallback = moveCallback;
     }
 
     @Override
@@ -48,12 +45,13 @@ public class Player extends GridActor implements KeyListener {
     }
 
 
-    public void takeTurn() {
+    public boolean takeTurn() {
         if(tryMove(velocity))
         {
             velocity.zero();
-            moveCallback.run();
+            return true;
         }
+        return false;
 
     }
 }

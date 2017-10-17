@@ -6,9 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.time.*;
 
-public class Main extends JFrame implements Runnable{
+public class Main extends JFrame implements Runnable {
 
-    private class Canvas extends  JPanel {
+    private class Canvas extends JPanel {
 
         public Canvas() {
             setPreferredSize(new Dimension(1280, 720));
@@ -17,7 +17,7 @@ public class Main extends JFrame implements Runnable{
 
         @Override
         public void paint(Graphics g) {
-            if(running) {
+            if (running) {
                 engine.renderEngine.draw(g);
             }
         }
@@ -34,6 +34,7 @@ public class Main extends JFrame implements Runnable{
 
     Grid grid;
     Player player;
+    Enemy enemy;
 
     final long fps = 60;
 
@@ -66,45 +67,39 @@ public class Main extends JFrame implements Runnable{
 
 
             waitForNextFrame();
-            if(!isPlayerTurn) {
-                engine.logicEngine.Update();
-                isPlayerTurn = true;
-            }
-            else
-            {
-                player.takeTurn();
+            if (!isPlayerTurn) {
+                if (engine.logicEngine.Update()) {
+                    isPlayerTurn = true; //only give the player his turn when the logic loop is finished
+                }
+            } else {
+                if(player.takeTurn()) {
+                    isPlayerTurn = false;
+                }
             }
             this.repaint();//in turn calls render engine update
-
         }
     }
 
-    public void start()
-    {
+    public void start() {
 
-        grid = new Grid( engine,20,30,1);
-        player = new Player(engine,grid.getTileAt(new GridVector(1,1)), ImageLoader.ImageList.COIN, () -> onPlayerTurn());
+        grid = new Grid(engine, 20, 30, 1);
+        player = new Player(engine, grid.getTileAt(new GridVector(1, 1)), ImageLoader.ImageList.COIN);
+        enemy = new Enemy(engine,grid.getTileAt(new GridVector(1,5)), ImageLoader.ImageList.TREE);
         engine.renderEngine.sortRenderOrder(this);
-
 
         running = true;
     }
 
-    void onPlayerTurn()
-    {
-        isPlayerTurn = false;
-    }
-    void waitForNextFrame()
-    {
-        if(lastFrame.isBefore(nextFrame)) { //if the time to update isn't now
+    void waitForNextFrame() {
+        if (lastFrame.isBefore(nextFrame)) { //if the time to update isn't now
             try {
                 Thread.sleep(Duration.between(Instant.now(), nextFrame).toMillis());
+            } catch (java.lang.InterruptedException e) {
             }
-            catch (java.lang.InterruptedException e){}
 
         }
         lastFrame = Instant.now();
-        nextFrame = lastFrame.plusMillis( (long)(( (float)1000) / (float)fps)); //add the fraction of a millisecond that a frame takes
+        nextFrame = lastFrame.plusMillis((long) (((float) 1000) / (float) fps)); //add the fraction of a millisecond that a frame takes
 
     }
 

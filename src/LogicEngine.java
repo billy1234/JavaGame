@@ -1,39 +1,41 @@
+import sun.rmi.runtime.Log;
+
 import java.util.ArrayList;
 
 public class LogicEngine extends EngineHeap<LogicObject> {
 
 
     //TODO debug this with some ai
-    int completedObjects = 0;
-    ArrayList<LogicObject> activeList;
-    ArrayList<LogicObject> completedItems;
+    int currentIndex = 0;
+    ArrayList<LogicObject> currentHeap;
 
-    public LogicEngine()
-    {
+
+    public LogicEngine() {
         super(LogicObject.class);
-        completedObjects = 0;
-        activeList = new ArrayList<LogicObject>();
-        completedItems = new ArrayList<LogicObject>();
+        this.currentIndex = 0;
+        this.currentHeap = new ArrayList<LogicObject>();
     }
 
-    public boolean Update()
+    public boolean Update()  //true means all objects have have had all of their turns
     {
-        if(activeList.size() == 0)
-        {
+
+        if (currentIndex < currentHeap.size()) {
+            if (currentHeap.get(currentIndex).run()) { //if the object returns it has finished its turn increment index
+                currentIndex++;
+                return false; //still exit the function to render the turn
+            } else {
+                return false;
+            }
+        } else {
             startNewturn();
+            return true;
         }
 
-        activeList.forEach(e ->{
-            if(e.run()) {
-                completedItems.add(e); //to avoid changing the list size while iterating over it
-            } } );
-        activeList.removeAll(completedItems);
-
-        return (activeList.size() == 0); //if there are no elements left all logic objects have finished their turn
     }
 
-    void startNewturn()
-    {
-        activeList.addAll(heap);
+    void startNewturn() {
+        currentHeap.clear();
+        currentHeap.addAll(heap);
+        currentIndex = 0;
     }
 }
