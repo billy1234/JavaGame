@@ -1,8 +1,7 @@
 import java.awt.*;
 import java.util.Comparator;
 
-public interface Drawable extends Comparable<Drawable>
-{
+public interface Drawable extends Comparable<Drawable> {
     void draw(Graphics g);
 
     int order();

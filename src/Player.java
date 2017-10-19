@@ -4,13 +4,12 @@ import java.awt.event.KeyListener;
 public class Player extends GridActor implements KeyListener {
 
     GridVector velocity;
-    char up = 'w',down = 's',left = 'a',right = 'd';
+    char up = 'w', down = 's', left = 'a', right = 'd';
 
 
-    public Player(Engine engine,Tile tile, ImageLoader.ImageList texture)
-    {
-        super(engine,tile, texture);
-        this.velocity = new GridVector(0,0);
+    public Player(Engine engine, Tile tile) {
+        super(engine, tile, ImageList.PLAYER);
+        this.velocity = new GridVector(0, 0);
     }
 
     @Override
@@ -26,19 +25,16 @@ public class Player extends GridActor implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if(e.getKeyChar() == up) {
+        if (e.getKeyChar() == up) {
             velocity.y = -1;
             velocity.x = 0;
-        }
-        else if(e.getKeyChar() == down) {
+        } else if (e.getKeyChar() == down) {
             velocity.y = 1;
             velocity.x = 0;
-        }
-        else if(e.getKeyChar() == left) {
+        } else if (e.getKeyChar() == left) {
             velocity.x = -1;
             velocity.y = 0;
-        }
-        else if(e.getKeyChar() == right) {
+        } else if (e.getKeyChar() == right) {
             velocity.x = 1;
             velocity.y = 0;
         }
@@ -46,8 +42,7 @@ public class Player extends GridActor implements KeyListener {
 
 
     public boolean takeTurn() {
-        if(tryMove(velocity))
-        {
+        if (tryMove(velocity)) {
             velocity.zero();
             return true;
         }

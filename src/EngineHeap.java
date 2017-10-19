@@ -1,33 +1,41 @@
-
-
-import java.lang.annotation.ElementType;
-import java.lang.reflect.Type;
+import java.util.Optional;
+import java.util.Stack;
 import java.util.ArrayList;
 
 public abstract class EngineHeap<T> {
 
 
     protected ArrayList<T> heap;
+    protected Stack<T> stack;
 
     protected int heapSize = 1000;
-    protected Class elementType;
 
-    public EngineHeap(Class elementType)
-    {
+    protected Optional<Runnable> heapModifiedCallback;
+
+
+    public EngineHeap() {
         this.heap = new ArrayList<T>(heapSize);
-        this.elementType = elementType;
+        this.stack = new Stack<T>();
+        this.heapModifiedCallback = Optional.empty();
     }
 
-    public void addObject(T e) //more than likely redundant
-    {
-        heap.add(e);
+    protected void updateHeap() {
+        boolean needsCallback = (stack.size() > 0);
+        for (int i = 0; i < stack.size(); i++) {
+            heap.add(stack.pop()); //realisticaly this should find the correct spot and insert the element and shit the necessary ones
+        }
+
+        if (heapModifiedCallback.isPresent() && needsCallback) { //if the heap was modified alert the modified callback
+            heapModifiedCallback.get().run();
+        }
     }
 
-    public void registerNewGameObject(GameObject g)
-    {
 
-        if(elementType.isInstance(g)) {
-            heap.add((T)g);
+    protected abstract boolean isLegalGameobj(GameObject g);
+
+    public void registerNewGameObject(GameObject g) {
+        if (isLegalGameobj(g)) {
+            stack.add((T) g);
         }
     }
 

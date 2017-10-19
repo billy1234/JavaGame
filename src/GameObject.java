@@ -1,9 +1,9 @@
 public abstract class GameObject {
 
-    private GameObject() {}
+    private GameObject() {
+    }
 
-    public GameObject(Engine engine)
-    {
+    public GameObject(Engine engine) {
         engine.registerGameObject(this);
     }
 }

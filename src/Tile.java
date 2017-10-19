@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Tile extends GameObject implements Drawable {
 
-    public int screenX = 0, screenY = 0, size =5,gridX = 0,gridY = 0;
+    public int screenX = 0, screenY = 0, size = 5, gridX = 0, gridY = 0;
 
     Texture texture;
     Color borderColor = Color.black;
@@ -11,7 +11,7 @@ public class Tile extends GameObject implements Drawable {
     public Grid grid;
     public GridActor occupant;
 
-    public Tile (Engine engine, int gridX, int gridY,int screenX, int screenY, int size, Grid grid, ImageLoader.ImageList textureType) {
+    public Tile(Engine engine, int gridX, int gridY, int screenX, int screenY, int size, Grid grid, ImageList textureType) {
         super(engine);
         this.screenX = screenX;
         this.screenY = screenY;
@@ -21,25 +21,24 @@ public class Tile extends GameObject implements Drawable {
         this.grid = grid;
         this.borderColor = Color.black;
         this.texture = new Texture(size, ImageLoader.getInstance().getImage(textureType));
-        if(texture == null) {
+        if (texture == null) {
             System.out.println("null texture object");
         }
     }
 
-    public GridVector getGridPos()
-    {
+    public GridVector getGridPos() {
         return new GridVector(gridX, gridY);
     }
 
     @Override
     public void draw(Graphics g) {
 
-        if(texture != null) {
+        if (texture != null) {
             texture.draw(g, screenX, screenY);
         }
-        
+
         g.setColor(borderColor);
-        g.drawRoundRect(screenX, screenY,size,size,5,5);
+        g.drawRoundRect(screenX, screenY, size, size, 5, 5);
     }
 
     @Override
