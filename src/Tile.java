@@ -40,6 +40,10 @@ public class Tile extends GameObject implements Drawable {
         }
     }
 
+    public GridActor getOccupant(){
+        return occupant;
+    }
+
     public void clearOccupant(){
         occupant = null;
     }

@@ -36,6 +36,7 @@ public class Grid {
 
     public Tile getTileAt(GridVector i) {
         if (!physics.inBounds(i)) {
+            System.err.println("Cant find: " + i.toString());
             return null;
         }
         return tiles[i.x][i.y];

@@ -1,3 +1,5 @@
+import java.util.function.Consumer;
+
 public class GridPhysics { //collison detecion compnent of a grid object
     public Grid grid;
 
@@ -11,6 +13,10 @@ public class GridPhysics { //collison detecion compnent of a grid object
         } else {
             return !isFull(i);
         }
+    }
+
+    public void doTo(GridVector pos, Consumer<GridActor> action) {
+        action.accept(grid.getTileAt(pos).getOccupant());
     }
 
     public boolean isFull(GridVector i) {

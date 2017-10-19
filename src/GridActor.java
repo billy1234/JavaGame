@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.util.function.Consumer;
 
 
 public class GridActor extends GameObject implements Drawable {
@@ -50,6 +51,10 @@ public class GridActor extends GameObject implements Drawable {
 
     public boolean tryChangeTile(GridVector pos) {
         return  physics.tryMoveActor(this,pos);
+    }
+
+    protected void toDoRelative(GridVector vec, Consumer<GridActor> action){
+        physics.doTo(tile.getGridPos().add(vec),action);
     }
 
 
