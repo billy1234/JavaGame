@@ -3,15 +3,17 @@ import java.util.Random;
 public class Grid {
     public Tile tiles[][];
     public int gridSize, tileSize, tileSpacing;
+    public GridPhysics physics;
 
     public Grid(Engine e, int gridSize, int tileSize, int tileSpacing, Level level, String seed) {
         this.gridSize = gridSize;
         this.tileSize = tileSize;
         this.tileSpacing = tileSpacing;
+        this.physics = new GridPhysics(this);
         generateGrid(e, level, seed);
     }
 
-    public void generateGrid(Engine engine, Level level, String seed) {
+    private void generateGrid(Engine engine, Level level, String seed) {
         tiles = new Tile[gridSize][gridSize];
         GridVector position;
         Random rng = new Random(seed.hashCode());
@@ -33,7 +35,7 @@ public class Grid {
     }
 
     public Tile getTileAt(GridVector i) {
-        if (i.x < 0 || i.y < 0 || i.x >= gridSize || i.y >= gridSize) {
+        if (!physics.inBounds(i)) {
             return null;
         }
         return tiles[i.x][i.y];

@@ -1,10 +1,7 @@
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.*;
-import java.time.*;
+
 
 public class Main extends JFrame implements Runnable {
 
@@ -61,12 +58,11 @@ public class Main extends JFrame implements Runnable {
     }
 
     public void start() {
-        setIgnoreRepaint(true); //dont draw untill setup is finished
+        setIgnoreRepaint(true); //don't draw until setup is finished
         level = PrefabFactory.getInstance(engine).loadDebugLevel(engine);
         engine.renderEngine.sortRenderOrder(this);
         running = true;
         setIgnoreRepaint(false);
     }
-
 
 }

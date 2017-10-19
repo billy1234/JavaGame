@@ -1,17 +1,24 @@
 import java.awt.*;
 
+
 public class GridActor extends GameObject implements Drawable {
 
     protected Tile tile;
+    protected GridPhysics physics;
 
     public Texture texture;
 
 
-    public GridActor(Engine engine, Tile tile, ImageList texture) {
+    public GridActor(Engine engine,GridVector position, Grid grid, ImageList texture) {
         super(engine);
-        this.tile = tile;
+        this.physics = grid.physics;
+        physics.moveActor(this,position);
         this.texture = new Texture(tile.size, ImageLoader.getInstance().getImage(texture));
-        changeTile(tile);
+
+    }
+
+    public GridActor(Engine engine,Tile tile, ImageList texture){
+        this(engine,tile.getGridPos(),tile.grid,texture);
     }
 
     @Override
@@ -36,28 +43,14 @@ public class GridActor extends GameObject implements Drawable {
             return false;
         }
 
+        //convert from velocity to a grid position
         GridVector pos = tile.getGridPos().add(v).constrain(0, 0, tile.grid.gridSize, tile.grid.gridSize);
-        return tryChangeTile(tile.grid.getTileAt(pos));
+        return tryChangeTile(pos);
     }
 
-    public boolean tryChangeTile(Tile nextTile) {
-        if (nextTile.occupant == null) {
-            changeTile(nextTile);
-            return true;
-        } else {
-            return false;
-        }
+    public boolean tryChangeTile(GridVector pos) {
+        return  physics.tryMoveActor(this,pos);
     }
 
-    protected void changeTile(Tile nextTile) //dosnt check next tiles ocupacy status
-    {
-        if (nextTile.occupant == null) {
-            tile.occupant = null;
-            nextTile.occupant = this;
-            this.tile = nextTile;
-        }
-
-
-    }
 
 }

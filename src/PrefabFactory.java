@@ -1,6 +1,3 @@
-import com.sun.org.apache.regexp.internal.RE;
-
-import java.security.PublicKey;
 import java.util.Random;
 
 public class PrefabFactory {
@@ -8,7 +5,7 @@ public class PrefabFactory {
     private static PrefabFactory instance;
     private final int gridSize = 25, tileSize = 30, tileSpacing = 1;
 
-    private String seed = "World 1";
+    private String seed = "Level One";
     protected Random rng;
 
     private final boolean debugSeed = true;
@@ -46,7 +43,7 @@ public class PrefabFactory {
     }
 
     public Level loadNewLevel(Engine e) {
-        return Level.getEmptyLevel().spawnGrid(e).addPlayer(e, new GridVector(1, 1));
+        return new Level().spawnGrid(e).addPlayer(e, new GridVector(1, 1));
     }
 
     public Level loadDebugLevel(Engine e) {

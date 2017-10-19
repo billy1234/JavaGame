@@ -9,7 +9,7 @@ public class Tile extends GameObject implements Drawable {
     Color borderColor = Color.black;
 
     public Grid grid;
-    public GridActor occupant;
+    private GridActor occupant;
 
     public Tile(Engine engine, int gridX, int gridY, int screenX, int screenY, int size, Grid grid, ImageList textureType) {
         super(engine);
@@ -28,6 +28,20 @@ public class Tile extends GameObject implements Drawable {
 
     public GridVector getGridPos() {
         return new GridVector(gridX, gridY);
+    }
+
+    public boolean isOccupied(){
+        return (occupant != null);
+    }
+
+    public void addOccupant(GridActor a){
+        if(!isOccupied()){
+            occupant = a;
+        }
+    }
+
+    public void clearOccupant(){
+        occupant = null;
     }
 
     @Override

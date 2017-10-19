@@ -12,6 +12,12 @@ public class Player extends GridActor implements KeyListener {
         this.velocity = new GridVector(0, 0);
     }
 
+    public Player(Engine engine,GridVector position ,Grid grid) {
+       this(engine,grid.getTileAt(position));
+    }
+
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 

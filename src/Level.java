@@ -1,6 +1,5 @@
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Stack;
+
 
 public class Level {
 
@@ -9,14 +8,12 @@ public class Level {
     public Grid grid;
     public ArrayList<GridActor> actors;
 
-    private Level() {
+    public Level() {
         this.isPlayerTurn = true;
         this.actors = new ArrayList<GridActor>();
     }
 
-    public static Level getEmptyLevel() {
-        return new Level();
-    }
+
 
     public Level spawnGrid(Engine e) {
         grid = PrefabFactory.getInstance(e).loadGrid(e, this);

@@ -13,6 +13,11 @@ public class LogicEngine extends EngineHeap<LogicObject> {
 
     public boolean Update()  //true means all objects have have had all of their turns
     {
+        if(heap.size() == 0){ //to ensure the ai dont miss their 1st trun
+            updateHeap();
+        }
+
+
         if (currentIndex < heap.size()) {
             if (heap.get(currentIndex).run()) { //if the object returns it has finished its turn increment index
                 currentIndex++;

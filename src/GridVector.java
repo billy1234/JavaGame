@@ -6,7 +6,7 @@ public class GridVector {
 
     @Override
     public String toString() {
-        return new String("screenX: " + x + " , " + "screenY: " + y + " , ");
+        return new String("X: " + x + " , " + "Y: " + y + " , ");
     }
 
     public GridVector(int x, int y) {
@@ -62,5 +62,9 @@ public class GridVector {
 
     public boolean isZero() {
         return (x == 0 && y == 0);
+    }
+
+    public static GridVector get(int x, int y){
+        return new GridVector(x,y);
     }
 }
